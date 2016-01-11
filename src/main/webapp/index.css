@@ -120,3 +120,17 @@ a:hover {
 .table__row--no-book {
     font-size: 14px;
 }
+
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.pagination li {
+    color: #000;
+    border: 1px solid black;
+    display: inline-block;
+    margin: 0 5px;
+    padding: 2px 3px;
+    text-align: center;
+}

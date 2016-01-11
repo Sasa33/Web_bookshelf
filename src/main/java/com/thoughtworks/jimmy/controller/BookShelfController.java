@@ -27,7 +27,7 @@ public class BookShelfController {
     public Iterable<BookEntity> queryByCategoryName(@PathVariable String categoryName) {
         return bookService.findByCategoryName(categoryName);
     }
-//
+
 //    @RequestMapping(method = RequestMethod.GET)
 //    public Iterable<BookEntity> query() {
 //

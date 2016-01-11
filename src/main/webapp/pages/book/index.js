@@ -3,8 +3,8 @@ window.onload = function () {
 
     if (isbn) {
 
-      //$(['name=ISBN']).disabled = true;
-      $(['name=ISBN']).prop("disable", true);
+      //$('[name=ISBN]').disabled = true;
+      $('[name=ISBN]').attr("disabled", true);
 
 
       /*用jquery 实现GET方式调用api请求*/

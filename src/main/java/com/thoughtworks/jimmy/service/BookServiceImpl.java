@@ -3,6 +3,8 @@ package com.thoughtworks.jimmy.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.thoughtworks.jimmy.entity.BookEntity;
@@ -56,6 +58,11 @@ public class BookServiceImpl implements BookService {
         CategoryEntity category = categoryRepository.findByName(name);
         Optional.ofNullable(category).orElseThrow(() -> new RuntimeException("Category not found !"));
         return bookRepository.findByCategoryCode(category.getCode());
+    }
+
+    public Page<BookEntity> findAll(Pageable pageable) {
+        Page<BookEntity> books = bookRepository.findAll(pageable);
+        return books;
     }
 
 }

@@ -1,13 +1,13 @@
 package com.thoughtworks.jimmy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.thoughtworks.jimmy.entity.BookEntity;
 import com.thoughtworks.jimmy.service.BookService;
 
@@ -27,13 +27,13 @@ public class BookShelfController {
     public Iterable<BookEntity> queryByCategoryName(@PathVariable String categoryName) {
         return bookService.findByCategoryName(categoryName);
     }
-
-    @RequestMapping(method = RequestMethod.GET)
-    public Iterable<BookEntity> query() {
-
-        return bookService.findAll();
-
-    }
+//
+//    @RequestMapping(method = RequestMethod.GET)
+//    public Iterable<BookEntity> query() {
+//
+//        return bookService.findAll();
+//
+//    }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -68,4 +68,17 @@ public class BookShelfController {
 
     }
 
+//    @RequestMapping(value = "/params", method=RequestMethod.GET)
+//    public Page<BookEntity> getEntryByParams(@RequestParam(value = "page", defaultValue = "0") Integer page,
+//                                             @RequestParam(value = "size", defaultValue = "15") Integer size) {
+//        Sort sort = new Sort(Sort.Direction.ASC, "isbn");
+//        Pageable pageable = new PageRequest(page, size, sort);
+//        return pageRepository.findAll(pageable);
+//    }
+
+    @RequestMapping(value = "", method=RequestMethod.GET)
+    public Page<BookEntity> getEntryByPageable(@PageableDefault(value = 5, sort = { "isbn" }, direction = Sort.Direction.ASC)
+                                                   Pageable pageable) {
+        return bookService.findAll(pageable);
+    }
 }

@@ -80,7 +80,10 @@ window.onload = function () {
 
 function pagination(page) {
       //var tableElements = [];
-      var booksList = document.querySelector('tbody');
+      var booksList = $('tbody');
+      var pageListObj = $(".pagination");
+      booksList.remove();
+      pageListObj.remove();
 
       //var jsonCon = books.parseJSON();
       var jsonObj = eval(page);
@@ -90,47 +93,30 @@ function pagination(page) {
 
       var totalPage = jsonObj["totalPages"];
       var currentPage = jsonObj["number"];
-      document.getElementById("curPage").innerHTML = currentPage;
 
-      //var prePage = (currentPage - 1) ? (currentPage - 1) : 0;
-      var prePage = currentPage - 1;
-      if (prePage < 0) {
-        prePage = 0;
-        var prePageObj = $('#prePage');
-        prePageObj.disabled = true;
-        prePageObj.removeAttr("href");
-        //document.getElementById("prePage").disabled = true;
 
-      } else {
-        document.getElementById("prePage").innerHTML = "<a href=\"javascript:void(0)\" onClick=\"goToPage('"+prePage+"')\">上一页</a>";
-      }
 
-      //var nextPage = (currentPage + 1 - totalPage) ? totalPage : (currentPage + 1);
-      var nextPage = currentPage + 1;
-      if (nextPage > totalPage) {
-        nextPage = totalPage;
-        var nextPageObj = $('#nextPage');
-        nextPageObj.disabled = true;
-        nextPageObj.removeAttr("href");
-        //document.getElementById("nextPage").disabled = true;
-      } else {
-        document.getElementById("nextPage").innerHTML = "<a href=\"javascript:void(0)\" onClick=\"goToPage('"+nextPage+"')\">下一页</a>";
+
+      for (var i=0; i<totalPage; i++) {
+        var li = document.createElement("li");
+        li.innerHTML = "<a>" + (i+1) + "</a>";
+        if(i!=currentPage) {
+          li.setAttribute("href", "javascript:void(0)");
+          li.setAttribute("onclick", "goToPage('"+ (i+1) +"')");
+        }
+        pageListObj.append(li);
       }
 
 
       if (!list.length) {
-        booksList.appendChild(createRow());
+        booksList.append(createRow());
       } else {
         list.forEach(function (book) {
           var tr = createRow(book);
           //tableElements.push(tr);
-          booksList.appendChild(tr);
+          booksList.append(tr);
         });
       }
-
-
-      document.getElementById("firsPage").innerHTML = "<a href=\"javascript:void(0)\" onClick=\"goToPage('"+0+"')\">第一页</a>";
-      document.getElementById("lastPage").innerHTML = "<a href=\"javascript:void(0)\" onClick=\"goToPage('"+(totalPage-1)+"')\">最末页</a>";
 }
 
 

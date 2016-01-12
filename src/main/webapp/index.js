@@ -62,16 +62,6 @@ window.onload = function () {
         url: baseUrl,
         dataType: 'json',
         success: function (books) { // books is the response object receiving from the database
-            //if (!books.length) {
-            //    booksList.appendChild(createRow());
-            //} else {
-            //    books.forEach(function (book) {
-            //        var tr = createRow(book);
-            //        tableElements.push(tr);
-            //        booksList.appendChild(tr);
-            //    });
-            //}
-
             pagination(books);
         }
     });
@@ -82,13 +72,11 @@ function pagination(page) {
       //var tableElements = [];
       var booksList = $('tbody');
       var pageListObj = $(".pagination");
-      booksList.remove();
-      pageListObj.remove();
+      booksList.empty();
+      pageListObj.empty();
 
-      //var jsonCon = books.parseJSON();
       var jsonObj = eval(page);
 
-      //var list = jsonObj.getJSONObject("content");
       var list = jsonObj["content"];
 
       var totalPage = jsonObj["totalPages"];
@@ -99,8 +87,9 @@ function pagination(page) {
 
       for (var i=0; i<totalPage; i++) {
         var li = document.createElement("li");
-        li.innerHTML = "<a>" + (i+1) + "</a>";
+        li.innerHTML = (i+1);
         if(i!=currentPage) {
+          li.innerHTML = "<a>" + (i+1) + "</a>";
           li.setAttribute("href", "javascript:void(0)");
           li.setAttribute("onclick", "goToPage('"+ (i+1) +"')");
         }
@@ -124,7 +113,7 @@ function pagination(page) {
 function goToPage(page) {
   $.ajax({
     type: "GET",
-    url: baseUrl + '?page=' + page,
+    url: baseUrl + '?page=' + (page-1),
     data: 'json',
     contentType: "application/json; charset=utf-8",
     success: function (books) {

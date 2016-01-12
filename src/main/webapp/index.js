@@ -72,8 +72,9 @@ function pagination(page) {
       //var tableElements = [];
       var booksList = $('tbody');
       var pageListObj = $(".pagination");
-      booksList.empty();
-      pageListObj.empty();
+
+      booksList.empty();  // clear the table rows from the previous page
+      pageListObj.empty();  // clear the li from the previous page
 
       var jsonObj = eval(page);
 
@@ -81,8 +82,6 @@ function pagination(page) {
 
       var totalPage = jsonObj["totalPages"];
       var currentPage = jsonObj["number"];
-
-
 
 
       for (var i=0; i<totalPage; i++) {
@@ -109,7 +108,6 @@ function pagination(page) {
 }
 
 
-// change page
 function goToPage(page) {
   $.ajax({
     type: "GET",

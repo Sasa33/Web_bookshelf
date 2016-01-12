@@ -28,12 +28,6 @@ public class BookShelfController {
         return bookService.findByCategoryName(categoryName);
     }
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public Iterable<BookEntity> query() {
-//
-//        return bookService.findAll();
-//
-//    }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)

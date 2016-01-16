@@ -17,6 +17,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
 
 springBoot {
     mainClass = "com.thoughtworks.jimmy.SpringBootWebApplication"
@@ -25,6 +26,11 @@ springBoot {
 jar {
     baseName = 'thwo-bookshelf-service'
     version = '0.1.0'
+}
+
+war {
+    baseName = "thwo-bookshelf"
+    version = "0.1"
 }
 
 repositories {
@@ -63,4 +69,19 @@ sourceSets {
 task initSourceFolders << {
     sourceSets*.java.srcDirs*.each { it.mkdirs() }
     sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+}
+
+test {
+    include '/src/test/unit'
+    exclude '/src/test/intg'
+
+    testLogging.showStandardStreams = true
+
+    beforeTest { descriptor ->
+        logger.lifecycle(descriptor)
+    }
+
+    onOutput { descriptor, event ->
+        logger.lifecycle(descriptor + " " + event.message)
+    }
 }
